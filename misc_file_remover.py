@@ -1,7 +1,9 @@
 
 import os
+import tkinter as tk
+from tkinter.filedialog import askdirectory
+directory = askdirectory()
 
-directory = os.getcwd()
 
 total = 0
 # Calculate total number of files
