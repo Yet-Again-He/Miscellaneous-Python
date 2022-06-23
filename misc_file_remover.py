@@ -15,7 +15,9 @@ for root, dirs, files in os.walk(directory):
 for roots, dirs, files in os.walk(directory):
 
     for filename in files:
-        if filename[-4:] != ".jpg":
-            os.remove(filename)
+        if filename.endswith("jpg"):
+            continue
+        elif filename[-4:] != "jpg" and os.path.exists(filename) and not os.path.isdir(filename):
+                os.remove(filename)
         else:
             continue
