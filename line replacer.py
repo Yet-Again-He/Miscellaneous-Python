@@ -18,41 +18,36 @@ new_word = "erebor"
 # Calculate total number of files
 for root, dirs, files in os.walk(directory):
     for file in files:
-        if file[-4:] == ".xml":
-            total += 1
+        total += 1
 
 # Begin walking thorugh the chosen directory
-try:
-    for root, dirs, files in os.walk(directory):
-        for filename in files:
+for root, dirs, files in os.walk(directory):
+    for filename in files:
 
-            root2 = root.replace("\\", "/")
-            if filename[-4:] == ".xml":
-                
-                # Get information from file
-                file = open(root2 + "/" + filename, "r", errors="ignore")
-                file_lines = file.readlines()
-                file.close()
+        root2 = root.replace("\\", "/")
+        if filename[-4:] == ".htm":
+            filename2 = filename[:-4]
+            
+            # Get information from file
+            file = open(root2 + "/" + filename, "r")
+            file_lines = file.readlines()
+            file.close()
 
-                # Replace information
-                new_file_lines = []
-                for line in file_lines:
-                    new_line = line.replace(org_word, new_word)
-                    new_line = line.replace(org_word_2, new_word)
-                    new_file_lines.append(new_line)
+            # Replace information
+            new_file_lines = []
+            for line in file_lines:
+                new_line = line.replace(style_line, link_tag)
+                new_file_lines.append(new_line)
 
-                # Input edited information back into file
-                file = open(root2 + "/" + filename, "w")
-                file.write("".join(new_file_lines))
-                file.close()
-                # add to the number of files completed
-                partial += 1
-                print(str(partial) + "/" + str(total) + "completed!")
-            else:
-                next
-
-except:
-    print(root2 + "/" + filename)
+            # Input edited information back into file
+            file = open(root2 + "/" + filename, "w")
+            file.write("".join(new_file_lines))
+            file.close()
+            # add to the number of files completed
+            partial += 1
+            print(str(partial) + "/" + str(total) + "completed!")
+        else:
+            next
 
 
 
