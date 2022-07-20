@@ -4,6 +4,7 @@ however, the scope of this file is limited to just replacing a certain word in c
 """
 
 import os
+import json
 from tkinter.filedialog import askdirectory
 
 directory = askdirectory()
@@ -30,7 +31,7 @@ try:
         for filename in files:
 
             root2 = root.replace("\\", "/")
-            if filename[-4:] == ".xml" or filename[-4:] == ".json":
+            if filename[-4:] == ".xml":
                 
                 # Get information from file
                 file = open(root2 + "/" + filename, "r", errors="ignore")
@@ -38,22 +39,44 @@ try:
                 file.close()
 
                 # Replace information
-                file_string = file_string.replace(org_word, new_word)
                 file_string = file_string.replace(org_word_2, new_word_2)
+                file_string = file_string.replace(org_word, new_word)
 
                 # Input edited information back into file
                 file = open(root2 + "/" + filename, "w")
-                file.write("".join(file_string))
+                file.write(file_string)
                 file.close()
                 # add to the number of files completed
                 partial += 1
-                print(str(partial) + "/" + str(total) + "completed!")
+                print(str(partial) + "/" + str(total) + "completed!")\
+
+            elif filename[-4:] == ".json":
+                # Unfortunately (or fortunately, depending on who's asking), you cannot modify json files like normal files, so here's its special code.
+                
+                # Get information from file
+                file = open(root2 + "/" + filename, "r", errors="ignore")
+                json_string = file.read()
+                file.close()
+                file_string = json.loads(json_string)
+
+                # Replace information
+                file_string = file_string.replace(org_word_2, new_word_2)
+                file_string = file_string.replace(org_word, new_word)
+                
+                # Input edited information back into file
+                json_string = json.dumps(file_string)
+
+                # Input edited information back into file
+                file = open(root2 + "/" + filename, "w")
+                file.write(file_string)
+                file.close()
+
             else:
                 next
 
     for root, dirs, files in os.walk(directory):
 
-        # This is for modifying the file names themselves.
+        # This is for modifying the file names.
         for filename in files:
 
             root2 = root.replace("\\", "/")
@@ -69,17 +92,15 @@ try:
 
     
     for root, dirs, files in os.walk(directory):
-    # This is for modifying the file names themselves.
+    # This is for modifying the folder names.
         for dirname in dirs:
 
             root2 = root.replace("\\", "/")
 
-            if "zapo" in root2:
-                root3 = root2.replace(org_word, new_word)
-                os.rename(root2, root3)
-            elif "zapotecs" in root2:
-                root3 = root2.replace(org_word_2, new_word_2)
-                os.rename(root2, root3)
+            if dirname == "zapotecs":
+                os.rename(root2 + "/" + dirname, root2 + "/" + new_word_2)
+            elif dirname == "zapo":
+                os.rename(root2 + "/" + dirname, root2 + "/" + new_word)
             else:
                 next
 
