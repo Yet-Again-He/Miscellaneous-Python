@@ -13,41 +13,73 @@ partial = 0
 file_string = ""
 org_word = "zapo"
 org_word_2 = "zapotecs"
-new_word = "erebor"
+new_word = "gondor"
+new_word_2 = "gondorians"
 
 # Calculate total number of files
 for root, dirs, files in os.walk(directory):
     for file in files:
-        if file[-4:] == ".xml":
+        if file[-4:] == ".xml" or file[-4:] == ".json":
             total += 1
 
 # Begin walking thorugh the chosen directory
 try:
     for root, dirs, files in os.walk(directory):
+
+        # This is for replacing the information INSIDE the files.
         for filename in files:
 
             root2 = root.replace("\\", "/")
-            if filename[-4:] == ".xml":
+            if filename[-4:] == ".xml" or filename[-4:] == ".json":
                 
                 # Get information from file
                 file = open(root2 + "/" + filename, "r", errors="ignore")
-                file_lines = file.readlines()
+                file_string = file.read()
                 file.close()
 
                 # Replace information
-                new_file_lines = []
-                for line in file_lines:
-                    new_line = line.replace(org_word, new_word)
-                    new_line = line.replace(org_word_2, new_word)
-                    new_file_lines.append(new_line)
+                file_string = file_string.replace(org_word, new_word)
+                file_string = file_string.replace(org_word_2, new_word_2)
 
                 # Input edited information back into file
                 file = open(root2 + "/" + filename, "w")
-                file.write("".join(new_file_lines))
+                file.write("".join(file_string))
                 file.close()
                 # add to the number of files completed
                 partial += 1
                 print(str(partial) + "/" + str(total) + "completed!")
+            else:
+                next
+
+    for root, dirs, files in os.walk(directory):
+
+        # This is for modifying the file names themselves.
+        for filename in files:
+
+            root2 = root.replace("\\", "/")
+
+            if "zapo" in filename:
+                filename_2 = filename.replace(org_word, new_word)
+                os.rename(root2 + "/" + filename, root2 + "/" + filename_2)
+            elif "zapotecs" in filename:
+                filename_2 = filename.replace(org_word_2, new_word_2)
+                os.rename(root2 + "/" + filename, root2 + "/" + filename_2)
+            else:
+                next
+
+    
+    for root, dirs, files in os.walk(directory):
+    # This is for modifying the file names themselves.
+        for dirname in dirs:
+
+            root2 = root.replace("\\", "/")
+
+            if "zapo" in root2:
+                root3 = root2.replace(org_word, new_word)
+                os.rename(root2, root3)
+            elif "zapotecs" in root2:
+                root3 = root2.replace(org_word_2, new_word_2)
+                os.rename(root2, root3)
             else:
                 next
 
