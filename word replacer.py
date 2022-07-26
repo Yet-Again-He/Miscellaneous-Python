@@ -48,31 +48,30 @@ try:
                 file.close()
                 # add to the number of files completed
                 partial += 1
-                print(str(partial) + "/" + str(total) + "completed!")\
-
-            elif filename[-4:] == ".json":
-                # Unfortunately (or fortunately, depending on who's asking), you cannot modify json files like normal files, so here's its special code.
-                
-                # Get information from file
-                file = open(root2 + "/" + filename, "r", errors="ignore")
-                json_string = file.read()
-                file.close()
-                file_string = json.loads(json_string)
-
-                # Replace information
-                file_string = file_string.replace(org_word_2, new_word_2)
-                file_string = file_string.replace(org_word, new_word)
-                
-                # Input edited information back into file
-                json_string = json.dumps(file_string)
-
-                # Input edited information back into file
-                file = open(root2 + "/" + filename, "w")
-                file.write(file_string)
-                file.close()
-
+                print(str(partial) + "/" + str(total) + "completed!")
             else:
                 next
+            # elif filename[-4:] == ".json":
+            #     # Unfortunately (or fortunately, depending on who's asking), you cannot modify json files like normal files, so here's its special code.
+                
+            #     # Get information from file
+            #     file = open(root2 + "/" + filename, "r", errors="ignore")
+            #     json_string = file.read()
+            #     file.close()
+            #     file_string = json.loads(json_string)
+
+            #     # Replace information
+            #     file_string = file_string.replace(org_word_2, new_word_2)
+            #     file_string = file_string.replace(org_word, new_word)
+                
+            #     # Input edited information back into file
+            #     json_string = json.dumps(file_string)
+
+            #     # Input edited information back into file
+            #     file = open(root2 + "/" + filename, "w")
+            #     file.write(file_string)
+            #     file.close()
+
 
     for root, dirs, files in os.walk(directory):
 
