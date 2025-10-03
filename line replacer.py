@@ -13,7 +13,8 @@ partial = 0
 file_string = ""
 org_word = "zapo"
 org_word_2 = "zapotecs"
-new_word = "erebor"
+new_word = "gond"
+new_word_2 = "gondorians"
 
 # Calculate total number of files
 for root, dirs, files in os.walk(directory):
